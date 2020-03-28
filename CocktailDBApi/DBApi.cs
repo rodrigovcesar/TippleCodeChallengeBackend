@@ -13,7 +13,7 @@ namespace CocktailDBApi
     {
         private const string BASE_URL = "https://www.thecocktaildb.com/api/json/v1/1/";
 
-        public async Task<FilteredResponse> GetIngredientSearch(string ingredient)
+        public async Task<FilteredResponse> GetCocktailByIngredient(string ingredient)
         {
             using var httpClient = new HttpClient();
             using var response = await httpClient.GetAsync(BASE_URL + "filter.php?i=" + ingredient);
