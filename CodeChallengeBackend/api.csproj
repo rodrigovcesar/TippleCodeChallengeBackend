@@ -5,7 +5,10 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Models\DTO" />
+      <Compile Remove="Models\DTO\**" />
+      <Content Remove="Models\DTO\**" />
+      <EmbeddedResource Remove="Models\DTO\**" />
+      <None Remove="Models\DTO\**" />
     </ItemGroup>
 
 
