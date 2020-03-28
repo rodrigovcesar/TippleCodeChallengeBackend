@@ -33,12 +33,15 @@ namespace CocktailDBApiTests
         [Fact]
         public async Task FetchCocktailById()
         {
-            var ingredient = "Gin";
+            var id = 11007;
+            var nonExistingId = 0;
 
-            var cocktails = await _cocktailDBApi.GetIngredientSearch(ingredient);
+            var cocktail = await _cocktailDBApi.FetchCocktailById(id);
+            var nullResponse = await _cocktailDBApi.FetchCocktailById(nonExistingId);
 
 
-            Assert.Equal(95, cocktails.Drinks.Count());
+            Assert.Equal("Margarita", cocktail.Drinks.First().StrDrink);
+            Assert.Null(nullResponse.Drinks);
         }
 
 
