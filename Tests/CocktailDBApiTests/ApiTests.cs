@@ -27,8 +27,20 @@ namespace CocktailDBApiTests
 
 
             Assert.Equal(95, cocktails.Drinks.Count());
+            _output.WriteLine(cocktails.Drinks.First().StrDrink);
         }
 
-        
+        [Fact]
+        public async Task FetchCocktailById()
+        {
+            var ingredient = "Gin";
+
+            var cocktails = await _cocktailDBApi.GetIngredientSearch(ingredient);
+
+
+            Assert.Equal(95, cocktails.Drinks.Count());
+        }
+
+
     }
 }
