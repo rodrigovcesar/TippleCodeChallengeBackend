@@ -4,10 +4,10 @@ using System.Text;
 
 namespace Models
 {
-    public class SearchResponse
+    public class CocktailSummary
     {
         public int IdDrink { get; set; }
         public string StrDrink { get; set; }
-        public string strDrinkThumb { get; set; }        
+        public string StrDrinkThumb { get; set; }
     }
 }
