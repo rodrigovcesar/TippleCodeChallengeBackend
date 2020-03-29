@@ -30,6 +30,7 @@ namespace api.Controllers
         
         [HttpGet]
         [Route("search-ingredient/{ingredient}")]
+        [ResponseCache(Duration = 120)]
         public async Task<IActionResult> GetIngredientSearch([FromRoute] string ingredient)
         {            
             var filteredResponse = await _dbApi.GetCocktailsByIngredient(ingredient);

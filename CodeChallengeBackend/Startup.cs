@@ -28,6 +28,7 @@ namespace api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAutoMapper(typeof(Startup).Assembly);
+            services.AddResponseCaching();
             services.AddControllers();
         }
 
@@ -41,7 +42,7 @@ namespace api
 
             //app.UseHttpsRedirection();
 
-
+            app.UseResponseCaching();
 
             app.UseRouting();
 
