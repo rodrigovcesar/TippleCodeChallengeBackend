@@ -23,7 +23,7 @@ namespace CocktailDBApiTests
         {
             var ingredient = "Gin";
 
-            var cocktails = await _cocktailDBApi.GetIngredientSearch(ingredient);
+            var cocktails = await _cocktailDBApi.GetCocktailsByIngredient(ingredient);
 
 
             Assert.Equal(95, cocktails.Drinks.Count());
