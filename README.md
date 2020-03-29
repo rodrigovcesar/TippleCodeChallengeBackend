@@ -22,5 +22,5 @@ info: Microsoft.Hosting.Lifetime[0]
 ## Obeservations
 
 The tests were made to mock the external calls the cocktail api. 
-This was possible after refactoring the project to use depency injection of the IHttpClient
+This was possible after refactoring the project to use depency injection of the IHttpClientFactory
 Ideally, this project also needs test for the mappers and WebApi. 
