@@ -1,21 +1,14 @@
 using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using CocktailDBApi;
 using System.Net.Http;
-using api.Middlewares;
+using CodeChallengeBackend.Middlewares;
 
-namespace api
+namespace CodeChallengeBackend
 {
     public class Startup
     {

@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace api.Middlewares
+namespace CodeChallengeBackend.Middlewares
 {
     public class ExceptionMiddleware
     {

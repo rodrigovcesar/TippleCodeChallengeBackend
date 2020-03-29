@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
+﻿using System.Linq;
 using System.Threading.Tasks;
-using api.Models.Response;
+using CodeChallengeBackend.Models.Response;
 using AutoMapper;
 using CocktailDBApi;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
-namespace api.Controllers
+namespace CodeChallengeBackend.Controllers
 {
     [Route("api")]
     [ApiController]

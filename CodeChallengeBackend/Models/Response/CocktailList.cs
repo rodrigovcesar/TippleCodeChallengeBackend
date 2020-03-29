@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace api.Models.Response
+namespace CodeChallengeBackend.Models.Response
 {
     public class CocktailList
     {

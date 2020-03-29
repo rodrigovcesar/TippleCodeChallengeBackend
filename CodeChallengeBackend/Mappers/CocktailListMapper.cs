@@ -1,11 +1,11 @@
-﻿using api.Models.Response;
+﻿using CodeChallengeBackend.Models.Response;
 using AutoMapper;
 using Models;
 using System.Collections.Generic;
 using System.Linq;
 
 
-namespace api.Mappers
+namespace CodeChallengeBackend.Mappers
 {
     public class CocktailListMapper : Profile
     {
