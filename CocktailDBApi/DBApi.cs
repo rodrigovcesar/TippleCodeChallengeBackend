@@ -12,11 +12,19 @@ namespace CocktailDBApi
 {
     public class DBApi
     {
-        private const string BASE_URL = "https://www.thecocktaildb.com/api/json/v1/1/";
+        private IHttpClientFactory _httpClientFactory;
+        private readonly string _baseUrl;
+
+        public DBApi(IHttpClientFactory httpClientFactory, string baseUrl)
+        {
+            _httpClientFactory = httpClientFactory;
+            _baseUrl = baseUrl;
+        }
 
 
         public async Task<CocktailResponse[]> GetCocktailsByIngredient(string ingredient)
         {
+            
             var filteredResponse = await GetCocktailsListSummary(ingredient);
             var drinkIds = from item in filteredResponse.Drinks select item.IdDrink;
 
@@ -29,10 +37,10 @@ namespace CocktailDBApi
             return new CocktailResponse[0];            
         }
 
-        private async Task<FilteredResponse> GetCocktailsListSummary(string ingredient)
+        public async Task<FilteredResponse> GetCocktailsListSummary(string ingredient)
         {
-            using var httpClient = new HttpClient();
-            using var response = await httpClient.GetAsync(BASE_URL + "filter.php?i=" + ingredient);
+            using var httpClient = _httpClientFactory.CreateClient();
+            using var response = await httpClient.GetAsync(_baseUrl + "filter.php?i=" + ingredient);
 
             if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 throw new NotOkResponseException(NotOkMessage(response.StatusCode));
@@ -47,19 +55,19 @@ namespace CocktailDBApi
 
         public Task<CocktailResponse> FetchCocktailById(int id)
         {
-            var urlToFetch = BASE_URL + "lookup.php?i=" + id;
+            var urlToFetch = _baseUrl + "lookup.php?i=" + id;
             return GetObjectResponse<CocktailResponse>(urlToFetch);            
         }
 
         public Task<CocktailResponse> GetRandom()
         {
-            var urlToFetch = BASE_URL + "random.php";
+            var urlToFetch = _baseUrl + "random.php";
             return GetObjectResponse<CocktailResponse>(urlToFetch);
         }       
 
         private async Task<T> GetObjectResponse<T>(string urlToFtech)
         {
-            using var httpClient = new HttpClient();
+            using var httpClient = _httpClientFactory.CreateClient();
             using var response = await httpClient.GetAsync(urlToFtech);
 
             if (response.StatusCode != System.Net.HttpStatusCode.OK)
