@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\CocktailDBApi\CocktailDBApi.csproj" />
+    <ProjectReference Include="..\CocktailDBApi\CocktailDBApi.csproj" />
   </ItemGroup>
 
   <ItemGroup>
