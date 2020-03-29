@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using api.Models.Response;
 using AutoMapper;
@@ -14,11 +15,12 @@ namespace api.Controllers
     [ApiController]
     public class BoozeController : ControllerBase
     {
-        private readonly DBApi _dbApi = new DBApi();
-        private readonly IMapper _mapper;
-        public BoozeController(IMapper mapper)
+        private readonly DBApi _dbApi;
+        private readonly IMapper _mapper;       
+        public BoozeController(IMapper mapper, DBApi dbApi)
         {
             _mapper = mapper;
+            _dbApi = dbApi;
         }
 
         [HttpGet]
