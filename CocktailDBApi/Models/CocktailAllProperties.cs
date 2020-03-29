@@ -62,6 +62,6 @@ namespace Models
         public string StrMeasure14 { get; set; }
         public string StrMeasure15 { get; set; }
         public string StrCreativeCommonsConfirmed { get; set; }
-        public DateTime DateModified { get; set; }
+        public DateTime? DateModified { get; set; }
     }
 }
