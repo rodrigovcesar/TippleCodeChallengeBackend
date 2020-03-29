@@ -1,4 +1,5 @@
 using CocktailDBApi;
+using Models;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -42,6 +43,17 @@ namespace CocktailDBApiTests
 
             Assert.Equal("Margarita", cocktail.Drinks.First().StrDrink);
             Assert.Null(nullResponse.Drinks);
+        }
+
+        [Fact]
+        public async Task GetRandonCocktail()
+        {
+            var cocktail1 = await _cocktailDBApi.GetRandom();
+            var cocktail2 = await _cocktailDBApi.GetRandom();
+            var id1 = cocktail1.Drinks.First().IdDrink;
+            var id2 = cocktail2.Drinks.First().IdDrink;            
+
+            Assert.NotEqual(id1, id2);
         }
 
 
