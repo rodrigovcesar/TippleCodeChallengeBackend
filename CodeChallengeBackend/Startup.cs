@@ -11,12 +11,15 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-
+using CocktailDBApi;
+using System.Net.Http;
+using api.Middlewares;
 
 namespace api
 {
     public class Startup
     {
+        private const string BASE_URL = "https://www.thecocktaildb.com/api/json/v1/1/";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -28,6 +31,8 @@ namespace api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAutoMapper(typeof(Startup).Assembly);
+            services.AddHttpClient<DBApi>();
+            services.AddScoped<DBApi>(x => new DBApi(x.GetRequiredService<IHttpClientFactory>(), BASE_URL));
             services.AddResponseCaching();
             services.AddControllers();
         }
@@ -43,6 +48,8 @@ namespace api
             //app.UseHttpsRedirection();
 
             app.UseResponseCaching();
+
+            app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseRouting();
 
