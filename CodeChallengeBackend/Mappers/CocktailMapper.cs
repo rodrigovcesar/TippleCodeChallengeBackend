@@ -1,7 +1,6 @@
 ﻿using api.Models.Response;
 using AutoMapper;
 using Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -19,8 +18,10 @@ namespace api.Mappers
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.StrDrink))
                 .ForMember(dest => dest.ImageURL, opt => opt.MapFrom(src => src.StrDrinkThumb))
                 .ForMember(dest => dest.Ingredients, opt => opt.MapFrom(src => MapIngredients(src)));
-            
 
+            CreateMap<CocktailResponse, Cocktail>()
+                .ConstructUsing((src, ctx) => ctx.Mapper.Map<Cocktail>(src.Drinks.First()))
+                .ForAllOtherMembers(opt => opt.Ignore());
         }
 
         private List<string> MapIngredients(CocktailAllProperties source)
