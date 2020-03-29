@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using api.Models.Response;
+using AutoMapper;
+using CocktailDBApi;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -12,6 +14,13 @@ namespace api.Controllers
     [ApiController]
     public class BoozeController : ControllerBase
     {
+        private readonly DBApi _dbApi = new DBApi();
+        private readonly IMapper _mapper;
+        public BoozeController(IMapper mapper)
+        {
+            _mapper = mapper;
+        }
+        
         // We will use the public CocktailDB API as our backend
         // https://www.thecocktaildb.com/api.php
         //
@@ -22,14 +31,20 @@ namespace api.Controllers
         [HttpGet]
         [Route("search-ingredient/{ingredient}")]
         public async Task<IActionResult> GetIngredientSearch([FromRoute] string ingredient)
-        {
-            var cocktailList = new CocktailList();
-            // TODO - Search the CocktailDB for cocktails with the ingredient given, and return the cocktails
-            // https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Gin
-            // You will need to populate the cocktail details from
-            // https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=11007
-            // The calculate and fill in the meta object
-            return Ok(cocktailList);
+        {            
+            var filteredResponse = await _dbApi.GetCocktailsByIngredient(ingredient);
+            if(filteredResponse.Drinks.Count() > 0)
+            {
+                var drinkIds = from item in filteredResponse.Drinks select item.IdDrink;                
+
+                var tasksToFetchCocktails = from id in drinkIds select _dbApi.FetchCocktailById(id);                
+                var cocktails = await Task.WhenAll(tasksToFetchCocktails);
+
+                var dto = _mapper.Map<CocktailList>(cocktails);
+                return Ok(dto);
+            }
+            
+            return Ok(new CocktailList());
         }
 
         [HttpGet]
