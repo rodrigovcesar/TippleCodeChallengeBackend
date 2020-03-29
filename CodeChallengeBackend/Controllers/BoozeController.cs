@@ -32,12 +32,12 @@ namespace api.Controllers
                 return BadRequest();
 
             var filteredResponse = await _dbApi.GetCocktailsByIngredient(ingredient);
-            var dto = new CocktailList();
+            
 
             if (filteredResponse.Count() > 0)
-                dto = _mapper.Map<CocktailList>(filteredResponse);
+                 return Ok(_mapper.Map<CocktailList>(filteredResponse));
 
-            return Ok(dto);
+            return NotFound();
         }
 
         [HttpGet]

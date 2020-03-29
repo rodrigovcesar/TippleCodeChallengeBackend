@@ -48,7 +48,7 @@ namespace CocktailDBApi
             string apiFilterResponseJson = await response.Content.ReadAsStringAsync();
 
             if (apiFilterResponseJson.Length < 1)
-                return new FilteredResponse();
+                return new FilteredResponse() { Drinks = new List<CocktailSummary>()};
 
             return JsonConvert.DeserializeObject<FilteredResponse>(apiFilterResponseJson);            
         }
