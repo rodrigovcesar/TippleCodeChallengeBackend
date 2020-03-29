@@ -27,8 +27,8 @@ namespace CocktailDBApiTests
             var cocktails = await _cocktailDBApi.GetCocktailsByIngredient(ingredient);
 
 
-            Assert.Equal(95, cocktails.Drinks.Count());
-            _output.WriteLine(cocktails.Drinks.First().StrDrink);
+            Assert.Equal(95, cocktails.Count());
+            _output.WriteLine(cocktails.First().Drinks.First().StrDrink);
         }
 
         [Fact]

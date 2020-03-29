@@ -20,32 +20,22 @@ namespace api.Controllers
         {
             _mapper = mapper;
         }
-        
-        // We will use the public CocktailDB API as our backend
-        // https://www.thecocktaildb.com/api.php
-        //
-        // Bonus points
-        // - Speed improvements
-        // - Unit Tests
-        
+
         [HttpGet]
         [Route("search-ingredient/{ingredient}")]
         [ResponseCache(Duration = 120)]
         public async Task<IActionResult> GetIngredientSearch([FromRoute] string ingredient)
-        {            
+        {
+            if (string.IsNullOrEmpty(ingredient))
+                return BadRequest();
+
             var filteredResponse = await _dbApi.GetCocktailsByIngredient(ingredient);
-            if(filteredResponse.Drinks.Count() > 0)
-            {
-                var drinkIds = from item in filteredResponse.Drinks select item.IdDrink;                
+            var dto = new CocktailList();
 
-                var tasksToFetchCocktails = from id in drinkIds select _dbApi.FetchCocktailById(id);                
-                var cocktails = await Task.WhenAll(tasksToFetchCocktails);
+            if (filteredResponse.Count() > 0)
+                dto = _mapper.Map<CocktailList>(filteredResponse);
 
-                var dto = _mapper.Map<CocktailList>(cocktails);
-                return Ok(dto);
-            }
-            
-            return Ok(new CocktailList());
+            return Ok(dto);
         }
 
         [HttpGet]
